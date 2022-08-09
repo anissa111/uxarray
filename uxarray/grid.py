@@ -194,15 +194,11 @@ class Grid:
         node_face_connectivity : ndarray
             Node-face connectivity array
         """
-        # initialize node_face_connectivity
-        node_face_connectivity = np.zeros((self.n_nodes, self.n_faces),
-                                          dtype=np.int64)
+        # get face_node_connectivity
+        face_node_connectivity = self.ds["Mesh2_face_nodes"]
 
-        # loop through faces and populate node_face_connectivity
-        for i in range(self.n_faces):
-            node_face_connectivity[self.face_nodes[i], i] = 1
-
-        return node_face_connectivity
+        print(face_node_connectivity)
+        print(max(max(face_node_connectivity)))
 
     def calculate_total_face_area(self, quadrature_rule="triangular", order=4):
         """Function to calculate the total surface area of all the faces in a
@@ -224,11 +220,6 @@ class Grid:
         face_areas = self.compute_face_areas(quadrature_rule, order)
 
         return np.sum(face_areas)
-
-    # Build the node-face connectivity array.
-    def build_node_face_connectivity(self):
-        """Not implemented."""
-        warn("Function placeholder, implementation coming soon.")
 
     # Build the edge-face connectivity array.
     def build_edge_face_connectivity(self):
