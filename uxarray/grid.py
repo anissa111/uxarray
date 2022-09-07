@@ -201,7 +201,6 @@ class Grid:
         face_node_connectivity = self.ds["Mesh2_face_nodes"]
 
         print(face_node_connectivity)
-        print(max(max(face_node_connectivity)))
 
     def calculate_total_face_area(self, quadrature_rule="triangular", order=4):
         """Function to calculate the total surface area of all the faces in a

@@ -7,8 +7,6 @@ from pathlib import Path
 
 import uxarray as ux
 
-current_path = Path(os.path.dirname(os.path.realpath(__file__)))
-
 
 class TestConnectivity(TestCase):
 
