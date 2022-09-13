@@ -197,10 +197,10 @@ class Grid:
         node_face_connectivity : ndarray
             Node-face connectivity array
         """
-        # get face_node_connectivity
-        face_node_connectivity = self.ds["Mesh2_face_nodes"]
-
-        print(face_node_connectivity)
+        node_face_connectivity = []
+        for face in self.ds.Mesh2_face_nodes.values:
+            node_face_connectivity.append([node for node in face if node >= 0])
+        return np.array(node_face_connectivity)
 
     def calculate_total_face_area(self, quadrature_rule="triangular", order=4):
         """Function to calculate the total surface area of all the faces in a
