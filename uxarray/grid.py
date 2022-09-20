@@ -190,17 +190,22 @@ class Grid:
             raise RuntimeError("Format not supported for writing: ", extension)
 
     def build_node_face_connectivity(self):
-        """Builds node-face connectivity for the grid.
+        """Builds node-face connectivity for the grid and assigns a new
+        parameter to the grid object if it does not already exist."""
 
-        Returns
-        -------
-        node_face_connectivity : ndarray
-            Node-face connectivity array
-        """
+        # reverse the face-node connectivity to get node-face connectivity
         node_face_connectivity = []
         for face in self.ds.Mesh2_face_nodes.values:
             node_face_connectivity.append([node for node in face if node >= 0])
-        return np.array(node_face_connectivity)
+
+        # assign to grid object
+        self.ds["Mesh2_node_face_connectivity"] = xr.DataArray(
+            data=xr.DataArray(node_face_connectivity),
+            attrs={
+                "cf_role": "node_face_connectivity",
+                "_FillValue": -1,
+                "start_index": 0
+            })
 
     def calculate_total_face_area(self, quadrature_rule="triangular", order=4):
         """Function to calculate the total surface area of all the faces in a
